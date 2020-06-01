@@ -42,12 +42,14 @@ public class SuggestCtl {
         if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("WL-Proxy-Client-IP");
         }
+        if(ip == null ){
+            ip = request.getHeader("X-Real-IP");
+        }
+
         if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
-        if(ip == null ){
-            ip = request.getRemoteAddr();
-        }
+
         if(ip.equals("127.0.0.1") || ip.equals("0:0:0:0:0:0:0:1")){
             //根据网卡取本机配置的IP
             InetAddress inet=null;
