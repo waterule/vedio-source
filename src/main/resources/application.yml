@@ -12,7 +12,7 @@ spring:
     url: jdbc:mysql://111.229.248.223:3306/rent?useUnicode=true&characterEncoding=UTF-8
     #url: jdbc:mysql://111.229.248.223:3306/rent?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&failOverReadOnly=false
     username: root
-    password: 123456
+    password: liuhai
     filters: stat
     maxActive: 20
     initialSize: 1
