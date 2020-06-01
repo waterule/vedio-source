@@ -1,5 +1,7 @@
 package xyz.haixin.rent.ctl;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -70,6 +72,15 @@ public class SuggestCtl {
         }
         visitorMapper.insert(visitor);
         return "ok";
+    }
+
+    @GetMapping("/visitorList")
+    public String getListVisit(){
+        List<Visitor> visitors = visitorMapper.selectList(new QueryWrapper<Visitor>());
+        List<Suggestion> suggestions = mapper.selectList(new QueryWrapper<Suggestion>());
+        String visit = JSONArray.toJSONString(visitors);
+        String suggest = JSONArray.toJSONString(suggestions);
+        return visit +"-------" + suggest;
     }
 
 
