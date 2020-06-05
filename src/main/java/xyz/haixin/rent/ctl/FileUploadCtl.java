@@ -15,7 +15,7 @@ import java.util.UUID;
 public class FileUploadCtl {
     @RequestMapping("/imageUpload.do")
     public Map<String,Object> imageUpload(@RequestParam("file") MultipartFile multipartFile)  {
-        String fileSavePath="shoesImagePath";
+        String fileSavePath="/img/";
         if (null == multipartFile || multipartFile.getSize() <= 0) {
             return new HashMap<String,Object>(){{put("code",400);put("msg","请选择上传文件。");}};
         }
