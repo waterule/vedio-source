@@ -3,6 +3,7 @@ package xyz.haixin.rent.ctl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.haixin.rent.entity.RentUser;
@@ -19,7 +20,7 @@ public class RentUserCtl {
     @Autowired
     RentUserMapper rentUserMapper;
     @PostMapping("/saveUser")
-    public String  saveUser(UserVo req){
+    public String  saveUser(@RequestBody UserVo req){
         RentUser user = new RentUser();
         user.setLoginTime(LocalDateTime.now());
         user.setName(req.getName());
@@ -33,7 +34,7 @@ public class RentUserCtl {
         return "ok";
     }
     @PostMapping("/checkUser")
-    public String checkUser(UserCheckVo req){
+    public String checkUser(@RequestBody UserCheckVo req){
         List<RentUser> rentUsers = rentUserMapper.selectList(new QueryWrapper<RentUser>()
                 .eq("name", req.getName()).eq("password", req.getPassword()));
         if(rentUsers != null && rentUsers.size()>0){
