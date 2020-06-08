@@ -11,9 +11,9 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("file")
+@RequestMapping("/file")
 public class FileUploadCtl {
-    @RequestMapping("/imageUpload.do")
+    @RequestMapping("/imageUpload")
     public Map<String,Object> imageUpload(@RequestParam("file") MultipartFile multipartFile)  {
         String fileSavePath="/img/";
         if (null == multipartFile || multipartFile.getSize() <= 0) {
