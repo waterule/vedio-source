@@ -1,9 +1,11 @@
 package xyz.haixin.rent.ctl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import xyz.haixin.rent.mapper.FileRentMapper;
 
 import java.io.File;
 import java.util.HashMap;
@@ -13,6 +15,8 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/file")
 public class FileUploadCtl {
+    @Autowired
+    FileRentMapper fileRentMapper;
     @RequestMapping("/imageUpload")
     public Map<String,Object> imageUpload(@RequestParam("file") MultipartFile multipartFile)  {
         String fileSavePath="/img/";
