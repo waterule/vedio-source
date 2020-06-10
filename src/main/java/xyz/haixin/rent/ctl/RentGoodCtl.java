@@ -28,4 +28,11 @@ public class RentGoodCtl {
         List<RentGoods> rentGoods = mapper.selectList(new QueryWrapper<RentGoods>());
         return rentGoods;
     }
+    @GetMapping("/getGood")
+    public RentGoods getGood(@RequestParam("id") int id){
+        RentGoods goods = mapper.selectById(id);
+        return goods;
+    }
+    /*@PostMapping("/talk")
+    public int saveTalk(@ResponseBody req)*/
 }
