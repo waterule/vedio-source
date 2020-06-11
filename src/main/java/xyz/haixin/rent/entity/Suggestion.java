@@ -11,4 +11,5 @@ public class Suggestion {
     private int id;
     private String content;
     private String mail;
+    private int userId;
 }
