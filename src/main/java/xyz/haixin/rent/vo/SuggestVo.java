@@ -6,5 +6,5 @@ import lombok.Data;
 public class SuggestVo {
     private String content;
     private String mail;
-    private int userId;
+    private int goodId;
 }

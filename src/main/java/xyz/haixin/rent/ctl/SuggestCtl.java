@@ -29,7 +29,7 @@ public class SuggestCtl {
         Suggestion suggestion = new Suggestion();
         suggestion.setContent(req.getContent());
         suggestion.setMail(req.getMail());
-        suggestion.setUserId(req.getUserId());
+        suggestion.setGoodId(req.getGoodId());
         mapper.insert(suggestion);
         return "ok";
 
@@ -84,5 +84,11 @@ public class SuggestCtl {
         return visit +"-------" + suggest;
     }
 
+    @GetMapping("/getMessage")
+    public List<Suggestion> getSuggs(@RequestParam("userId") String userId){
+        List<Suggestion> suggestions = mapper.
+                selectList(new QueryWrapper<Suggestion>().eq("user_id",userId));
+        return suggestions;
+    }
 
 }
