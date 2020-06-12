@@ -30,6 +30,7 @@ public class SuggestCtl {
         suggestion.setContent(req.getContent());
         suggestion.setMail(req.getMail());
         suggestion.setGoodId(req.getGoodId());
+        suggestion.setUserId(req.getUserId());
         mapper.insert(suggestion);
         return "ok";
 

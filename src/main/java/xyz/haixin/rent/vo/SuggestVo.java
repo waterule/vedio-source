@@ -7,4 +7,5 @@ public class SuggestVo {
     private String content;
     private String mail;
     private int goodId;
+    private int userId;
 }

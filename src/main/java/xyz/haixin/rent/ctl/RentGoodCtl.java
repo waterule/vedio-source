@@ -33,6 +33,13 @@ public class RentGoodCtl {
         RentGoods goods = mapper.selectById(id);
         return goods;
     }
+    @GetMapping("/getMyGoods")
+    public List<RentGoods> getMyGoods(@RequestParam("userId") String userId){
+        List<RentGoods> rentGoods = mapper
+                .selectList(new QueryWrapper<RentGoods>().eq("user_id",userId));
+        return rentGoods;
+    }
+
     /*@PostMapping("/talk")
     public int saveTalk(@ResponseBody req)*/
 }
