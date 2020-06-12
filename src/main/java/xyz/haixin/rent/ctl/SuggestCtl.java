@@ -5,8 +5,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import xyz.haixin.rent.entity.RentTalk;
 import xyz.haixin.rent.entity.Suggestion;
 import xyz.haixin.rent.entity.Visitor;
+import xyz.haixin.rent.mapper.RentTalkMapper;
 import xyz.haixin.rent.mapper.SuggestionMapper;
 import xyz.haixin.rent.mapper.VisitorMapper;
 import xyz.haixin.rent.vo.SuggestVo;
@@ -24,6 +26,8 @@ public class SuggestCtl {
 
     @Autowired
     VisitorMapper visitorMapper;
+    @Autowired
+    RentTalkMapper talkMapper;
     @PostMapping("/submit")
     public String submitSuggest(@RequestBody SuggestVo req){
         Suggestion suggestion = new Suggestion();
@@ -32,6 +36,19 @@ public class SuggestCtl {
         suggestion.setGoodId(req.getGoodId());
         suggestion.setUserId(req.getUserId());
         mapper.insert(suggestion);
+        return "ok";
+
+    }
+
+    @PostMapping("/submitTalk")
+    public String submitTalk(@RequestBody SuggestVo req){
+        RentTalk suggestion = new RentTalk();
+        suggestion.setContent(req.getContent());
+        suggestion.setContact(req.getMail());
+        suggestion.setGoodId(req.getGoodId());
+        suggestion.setUserId(req.getUserId());
+        suggestion.setIsUse(1);
+        talkMapper.insert(suggestion);
         return "ok";
 
     }
@@ -86,10 +103,19 @@ public class SuggestCtl {
     }
 
     @GetMapping("/getMessage")
-    public List<Suggestion> getSuggs(@RequestParam("userId") String userId){
-        List<Suggestion> suggestions = mapper.
-                selectList(new QueryWrapper<Suggestion>().eq("user_id",userId));
+    public List<RentTalk> getSuggs(@RequestParam("userId") String userId){
+        List<RentTalk> suggestions = talkMapper.
+                selectList(new QueryWrapper<RentTalk>().
+                        eq("user_id",userId).eq("is_use",1));
         return suggestions;
+    }
+
+    @GetMapping("/delMessage")
+    public int delMessage(@RequestParam("messageId") int messageId){
+        RentTalk rentTalk = talkMapper.selectById(messageId);
+        rentTalk.setIsUse(0);
+        return talkMapper.update(rentTalk,new QueryWrapper<RentTalk>()
+                .eq("id",messageId));
     }
 
 }

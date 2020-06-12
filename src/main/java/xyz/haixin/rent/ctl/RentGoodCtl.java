@@ -1,16 +1,19 @@
 package xyz.haixin.rent.ctl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xyz.haixin.rent.entity.RentGoods;
 import xyz.haixin.rent.mapper.RentGoodsMapper;
 import xyz.haixin.rent.vo.GoodsVo;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
 @RequestMapping("/goods")
+@Slf4j
 public class RentGoodCtl {
     @Autowired
     RentGoodsMapper mapper;
@@ -21,6 +24,7 @@ public class RentGoodCtl {
         goods.setImg(req.getImg());
         goods.setPrice(req.getPrice());
         goods.setUserId(req.getUserId());
+        goods.setIsUse(1);
         return mapper.insert(goods);
     }
     @GetMapping("/getGoods")
@@ -45,7 +49,12 @@ public class RentGoodCtl {
     public int deleteGoods(@RequestParam("goodId") String goodId){
         RentGoods goods = mapper.selectById(goodId);
         goods.setIsUse(0);
-        return mapper.update(goods,new QueryWrapper<RentGoods>());
+        try {
+            Runtime.getRuntime().exec(" mv img/"+goods.getImg() +" img/del/");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return mapper.update(goods,new QueryWrapper<RentGoods>().eq("id",goodId));
     }
 
 
