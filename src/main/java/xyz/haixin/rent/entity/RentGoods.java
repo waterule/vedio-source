@@ -11,4 +11,5 @@ public class RentGoods {
     private String detail;
     private String img;
     private int userId;
+    private int isUse;
 }

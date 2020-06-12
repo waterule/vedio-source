@@ -25,7 +25,8 @@ public class RentGoodCtl {
     }
     @GetMapping("/getGoods")
     public List<RentGoods> getGoods(){
-        List<RentGoods> rentGoods = mapper.selectList(new QueryWrapper<RentGoods>());
+        List<RentGoods> rentGoods = mapper.selectList(new QueryWrapper<RentGoods>()
+                .eq("is_use",1));
         return rentGoods;
     }
     @GetMapping("/getGood")
@@ -36,10 +37,16 @@ public class RentGoodCtl {
     @GetMapping("/getMyGoods")
     public List<RentGoods> getMyGoods(@RequestParam("userId") String userId){
         List<RentGoods> rentGoods = mapper
-                .selectList(new QueryWrapper<RentGoods>().eq("user_id",userId));
+                .selectList(new QueryWrapper<RentGoods>().
+                        eq("user_id",userId).eq("is_use",1));
         return rentGoods;
     }
+    @GetMapping("/deleteGood")
+    public int deleteGoods(@RequestParam("goodId") String goodId){
+        RentGoods goods = mapper.selectById(goodId);
+        goods.setIsUse(0);
+        return mapper.update(goods,new QueryWrapper<RentGoods>());
+    }
 
-    /*@PostMapping("/talk")
-    public int saveTalk(@ResponseBody req)*/
+
 }
